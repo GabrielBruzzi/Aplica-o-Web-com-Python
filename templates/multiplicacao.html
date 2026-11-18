@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Multiplicação</title>
+</head>
+<body>
+    <nav>
+        <a href="{{ url_for('index') }}">Início</a> |
+        <a href="{{ url_for('soma_page') }}">Soma</a> |
+        <a href="{{ url_for('subtracao_page') }}">Subtração</a> |
+        <a href="{{ url_for('multiplicacao_page') }}">Multiplicação</a> |
+        <a href="{{ url_for('divisao_page') }}">Divisão</a>
+    </nav>
+
+    <h1>Operação de Multiplicação</h1>
+    <input type="number" id="valor1" placeholder="Valor 1">
+    <input type="number" id="valor2" placeholder="Valor 2">
+    <button onclick="calcular()">Calcular Multiplicação</button>
+    <h2 id="resultado"></h2>
+
+    <script>
+        async function calcular() {
+            const valor1 = document.getElementById("valor1").value;
+            const valor2 = document.getElementById("valor2").value;
+
+            const resposta = await fetch("/api/multiplicacao", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ valor1, valor2 })
+            });
+
+            const dados = await resposta.json();
+            document.getElementById("resultado").innerText = "Resultado: " + dados.resultado;
+        }
+    </script>
+</body>
+</html>
