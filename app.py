@@ -4,7 +4,6 @@ import operacoes  # importa funções do arquivo separado
 # Como executar:
 # 1. Certifique-se de ter o Flask instalado: pip install flask
 # 2. Execute este arquivo: python app.py
-# python.exe -m pip install --upgrade pip
 
 app = Flask(__name__)
 
@@ -58,13 +57,14 @@ def divisao_page():
     return render_template("divisao.html")
 
 @app.route("/api/divisao", methods=["POST"])
-def multiplicacao():
+def divisao():
     dados = request.get_json()
     valor1 = float(dados["valor1"])
     valor2 = float(dados["valor2"])
+    if valor2 == 0:
+        return jsonify({"resultado": "Erro: divisão por zero"})
     resultado = operacoes.calcular_divisao(valor1, valor2)
     return jsonify({"resultado": resultado})
-
 
 if __name__ == "__main__":
     app.run(debug=True)
